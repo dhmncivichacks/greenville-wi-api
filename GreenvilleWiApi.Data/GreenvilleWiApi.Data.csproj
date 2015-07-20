@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="GarbageCollection\GarbageCollectionEvent.cs" />
     <Compile Include="GarbageCollection\GarbageDayCalculator.cs" />
+    <Compile Include="GarbageCollection\OnlyDateConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,12 +15,12 @@ namespace GreenvilleWiApi.Data.GarbageCollection
         /// <summary>
         /// Gets or sets the type of collection
         /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
         public GarbageCollectionType CollectionType { get; set; }
 
         /// <summary>
         /// Gets or sets the date of collection
         /// </summary>
+        [JsonConverter(typeof(OnlyDateConverter))]
         public DateTime CollectionDate { get; set; }
 
         /// <summary>

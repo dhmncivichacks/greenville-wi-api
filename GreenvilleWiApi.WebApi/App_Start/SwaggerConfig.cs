@@ -3,6 +3,9 @@ using System.Web.Http;
 using WebActivatorEx;
 using GreenvilleWiApi.WebApi;
 using Swashbuckle.Application;
+using GreenvilleWiApi.Data.GarbageCollection;
+using Swashbuckle.Swagger;
+using System.Linq;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -127,7 +130,7 @@ namespace GreenvilleWiApi.WebApi
                         // enum type. Swashbuckle will honor this change out-of-the-box. However, if you use a different
                         // approach to serialize enums as strings, you can also force Swashbuckle to describe them as strings.
                         // 
-                        c.DescribeAllEnumsAsStrings();
+                        c.DescribeAllEnumsAsStrings(true);
 
                         // Similar to Schema filters, Swashbuckle also supports Operation and Document filters:
                         //
@@ -135,6 +138,9 @@ namespace GreenvilleWiApi.WebApi
                         // Operation filters.
                         //
                         //c.OperationFilter<AddDefaultResponse>();
+
+                        c.OperationFilter<GreenvilleApiFilter>();
+
                         //
                         // If you've defined an OAuth2 flow as described above, you could use a custom filter
                         // to inspect some attribute on each action and infer which (if any) OAuth2 scopes are required
@@ -162,6 +168,8 @@ namespace GreenvilleWiApi.WebApi
                         // custom strategy to pick a winner or merge the descriptions for the purposes of the Swagger docs 
                         //
                         //c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+
+                        c.SchemaFilter<GreenvilleApiFilter>();
                     })
                 .EnableSwaggerUi(c =>
                     {
@@ -216,5 +224,23 @@ namespace GreenvilleWiApi.WebApi
                         //c.EnableOAuth2Support("test-client-id", "test-realm", "Swagger UI");
                     });
         }
+
+        private class GreenvilleApiFilter : ISchemaFilter, IOperationFilter
+        {
+            public void Apply(Schema schema, SchemaRegistry schemaRegistry, System.Type type)
+            {
+                // We should probably be more clever and look for an attribute or something here...
+                foreach (var dtProp in schema.properties.Where(x => x.Value.format == "date-time"))
+                    dtProp.Value.format = "date";
+            }
+
+            public void Apply(Operation operation, SchemaRegistry schemaRegistry, System.Web.Http.Description.ApiDescription apiDescription)
+            {
+                // We should probably be more clever and look for an attribute or something here...
+                foreach (var dtParam in operation.parameters.Where(x => x.format == "date-time"))
+                    dtParam.format = "date";
+            }
+        }
+
     }
 }
