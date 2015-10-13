@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net45": {
+      "wrappedProject": "../../GreenvilleWiApi.Data/GreenvilleWiApi.Data.csproj",
+      "bin": {
+        "assembly": "../../GreenvilleWiApi.Data/obj/{configuration}/GreenvilleWiApi.Data.dll",
+        "pdb": "../../GreenvilleWiApi.Data/obj/{configuration}/GreenvilleWiApi.Data.pdb"
+      },
+      "dependencies": {
+        "Geocoding.net": "3.3.0",
+        "Newtonsoft.Json": "7.0.1",
+        "StyleCop.MSBuild": "4.7.49.1"
+      }
+    }
+  }
+}
