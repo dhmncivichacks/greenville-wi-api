@@ -56,12 +56,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GreenvilleWiApi.Data\GreenvilleWiApi.Data.csproj">
-      <Project>{1f612a8d-5879-477d-b61a-8db3a22934fe}</Project>
-      <Name>GreenvilleWiApi.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

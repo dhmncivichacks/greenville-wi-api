@@ -3,7 +3,6 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "Geocoding.net": "3.3.0",
     "GreenvilleWiApi.Data": "1.0.0-*",
     "Microsoft.AspNet.Mvc": "6.0.0-beta7",
     "Microsoft.AspNet.Mvc.Formatters.Json": "6.0.0-beta7",
@@ -23,7 +22,8 @@
       "dependencies": {
 
       }
-    }
+    },
+    "dnxcore50": { }
   },
 
   "exclude": [
