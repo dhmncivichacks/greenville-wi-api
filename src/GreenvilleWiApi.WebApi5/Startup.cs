@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Routing;
-using Microsoft.Framework.DependencyInjection;
-using Swashbuckle.Application;
-using Swashbuckle.Swagger;
 using Microsoft.AspNet.Mvc;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Converters;
+using Microsoft.Framework.DependencyInjection;
 using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using Swashbuckle.Swagger;
+using Swashbuckle.Swagger.Annotations;
 
 namespace GreenvilleWiApi.WebApi5
 {
@@ -43,6 +38,8 @@ namespace GreenvilleWiApi.WebApi5
             {
                 c.SingleApiVersion(new Info { Version = "v1", Title = "GreenvilleWiApi" });
                 c.OperationFilter<GreenvilleApiFilter>();
+                c.OperationFilter<ApplySwaggerOperationFilterAttributes>();
+                c.DocumentFilter<GreenvilleApiFilter>();
             });
 
             services.ConfigureSwaggerSchema(c =>
@@ -67,8 +64,13 @@ namespace GreenvilleWiApi.WebApi5
             app.UseSwaggerUi();
         }
 
-        private class GreenvilleApiFilter : IModelFilter, IOperationFilter
+        private class GreenvilleApiFilter : IModelFilter, IOperationFilter, IDocumentFilter
         {
+            public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
+            {
+                swaggerDoc.BasePath = null;
+            }
+
             public void Apply(Schema model, ModelFilterContext context)
             {
                 foreach (var dtProp in model.Properties.Where(x => x.Value.Format == "date-time"))
