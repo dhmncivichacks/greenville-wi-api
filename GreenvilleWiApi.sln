@@ -8,11 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{34A30A
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GreenvilleWiApi.WebApi5", "GreenvilleWiApi.WebApi5\GreenvilleWiApi.WebApi5.xproj", "{DC4B9118-45B5-4074-BF3D-E4AEA2603DE7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GreenvilleWiApi.WebApi5", "src\GreenvilleWiApi.WebApi5\GreenvilleWiApi.WebApi5.xproj", "{DC4B9118-45B5-4074-BF3D-E4AEA2603DE7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GreenvilleWiApi.Data", "GreenvilleWiApi.Data\GreenvilleWiApi.Data.xproj", "{3A51BFDF-4ECB-40C4-82E1-44166A7FEB55}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GreenvilleWiApi.Data", "src\GreenvilleWiApi.Data\GreenvilleWiApi.Data.xproj", "{3A51BFDF-4ECB-40C4-82E1-44166A7FEB55}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GreenvilleWiApi.Test", "GreenvilleWiApi.Test\GreenvilleWiApi.Test.xproj", "{5115E424-8201-422A-B363-592EFB122556}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GreenvilleWiApi.Test", "test\GreenvilleWiApi.Test\GreenvilleWiApi.Test.xproj", "{5115E424-8201-422A-B363-592EFB122556}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A873B560-BD02-4CD8-BE3C-5441C1ED5E97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{21A512B9-369F-43D1-8EE5-FEC429C85261}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,5 +39,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DC4B9118-45B5-4074-BF3D-E4AEA2603DE7} = {A873B560-BD02-4CD8-BE3C-5441C1ED5E97}
+		{3A51BFDF-4ECB-40C4-82E1-44166A7FEB55} = {A873B560-BD02-4CD8-BE3C-5441C1ED5E97}
+		{5115E424-8201-422A-B363-592EFB122556} = {21A512B9-369F-43D1-8EE5-FEC429C85261}
 	EndGlobalSection
 EndGlobal
