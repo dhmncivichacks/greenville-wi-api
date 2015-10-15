@@ -1,15 +1,20 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace GreenvilleWiApi.Data.GoogleGeocoding
 {
+    /// <summary>
+    /// Proxy for submitting geocoding requests to google
+    /// </summary>
     public static class GoogleGeocoder
     {
+        /// <summary>
+        /// Queries google's geocoding service
+        /// </summary>
         public static async Task<List<GeocodeResult>> Geocode(string address)
         {
             // https://maps.googleapis.com/maps/api/geocode/json?address=W6683%20Spring%20Green%20Pl%20Greenville,%20WI%2054942

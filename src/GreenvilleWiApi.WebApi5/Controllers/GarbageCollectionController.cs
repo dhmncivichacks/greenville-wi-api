@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
 using GreenvilleWiApi.Data.GarbageCollection;
 using GreenvilleWiApi.Data.GoogleGeocoding;
-using Swashbuckle.Swagger.Annotations;
+using Microsoft.AspNet.Mvc;
 using Swashbuckle.Swagger;
-
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+using Swashbuckle.Swagger.Annotations;
 
 namespace GreenvilleWiApi.WebApi5.Controllers
 {
+    /// <summary>
+    /// Garbage collection API
+    /// </summary>
     [Route("api/[controller]")]
     public class GarbageCollectionController : Controller
     {
@@ -23,7 +24,7 @@ namespace GreenvilleWiApi.WebApi5.Controllers
             get
             {
                 // There doesn't seem to be ConvertTimeFromUtc in .NET Core, so we'll wing it for now...
-                //return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
+                ////return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time"));
 
                 return DateTime.UtcNow.AddHours(-6);
             }
@@ -62,8 +63,14 @@ namespace GreenvilleWiApi.WebApi5.Controllers
             return new List<GarbageCollectionEvent>();
         }
 
+        /// <summary>
+        /// Operation filter for the garbage collection API
+        /// </summary>
         public class GarbageCollectionOperationFilter : IOperationFilter
         {
+            /// <summary>
+            /// Called when generating the operation
+            /// </summary>
             public void Apply(Operation operation, OperationFilterContext context)
             {
                 operation.OperationId = "GarbageCollection_Get";

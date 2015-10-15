@@ -11,14 +11,22 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace GreenvilleWiApi.WebApi5
 {
+    /// <summary>
+    /// Application intialization class
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Initializes a new instance of the Startup class
+        /// </summary>
         public Startup(IHostingEnvironment env)
         {
         }
 
-        // This method gets called by a runtime.
-        // Use this method to add services to the container
+        /// <summary>
+        /// This method gets called by a runtime.
+        /// Use this method to add services to the container 
+        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(c =>
@@ -31,7 +39,7 @@ namespace GreenvilleWiApi.WebApi5
             
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
-            // services.AddWebApiConventions();
+            //// services.AddWebApiConventions();
 
             services.AddSwagger();
             services.ConfigureSwaggerDocument(c =>
@@ -50,7 +58,9 @@ namespace GreenvilleWiApi.WebApi5
             });
         }
 
-        // Configure is called after ConfigureServices is called.
+        /// <summary>
+        /// Configure is called after ConfigureServices is called.
+        /// </summary>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             // Configure the HTTP request pipeline.
@@ -58,26 +68,39 @@ namespace GreenvilleWiApi.WebApi5
 
             // Add MVC to the request pipeline.
             app.UseMvc();
+
             // Add the following route for porting Web API 2 controllers.
-            // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
+            //// routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
 
             app.UseSwagger();
             app.UseSwaggerUi();
         }
 
+        /// <summary>
+        /// Swashbuckle Ahoy global filters
+        /// </summary>
         private class GreenvilleApiFilter : IModelFilter, IOperationFilter, IDocumentFilter
         {
+            /// <summary>
+            /// Called when genrating the document
+            /// </summary>
             public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
             {
                 swaggerDoc.BasePath = null;
             }
 
+            /// <summary>
+            /// Called when generating the schema
+            /// </summary>
             public void Apply(Schema model, ModelFilterContext context)
             {
                 foreach (var dtProp in model.Properties.Where(x => x.Value.Format == "date-time"))
                     dtProp.Value.Format = "date";
             }
 
+            /// <summary>
+            /// Called when generating the operation
+            /// </summary>
             public void Apply(Operation operation, OperationFilterContext context)
             {
                 foreach (var dtParam in operation.Parameters.Where(x => x is NonBodyParameter).Cast<NonBodyParameter>())

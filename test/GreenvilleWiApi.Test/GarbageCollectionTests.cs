@@ -5,8 +5,14 @@ using Xunit;
 
 namespace GreenvilleWiApi.Test
 {
+    /// <summary>
+    /// Garbage collection calculation unit tests
+    /// </summary>
     public class GarbageCollectionTests
     {
+        /// <summary>
+        /// Tests that the correct garbage collection types are returned from the calculator
+        /// </summary>
         [Fact]
         public void CorrectGarbageCollectionTypesReturned()
         {
@@ -24,6 +30,9 @@ namespace GreenvilleWiApi.Test
             Assert.Equal(new List<GarbageCollectionType> { }, GarbageDayCalculator.CollectionTypesForDay(new DateTime(2015, 11, 27), DayOfWeek.Friday));
         }
 
+        /// <summary>
+        /// Tests that the correct events are returned from the calculator
+        /// </summary>
         [Fact]
         public void CorrectGarbageCollectionEventsReturned()
         {
