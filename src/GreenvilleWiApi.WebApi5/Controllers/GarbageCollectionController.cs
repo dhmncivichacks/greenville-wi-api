@@ -66,6 +66,8 @@ namespace GreenvilleWiApi.WebApi5.Controllers
         {
             public void Apply(Operation operation, OperationFilterContext context)
             {
+                operation.OperationId = "GarbageCollection_Get";
+
                 foreach (var dtParam in operation.Parameters.Where(x => x is NonBodyParameter).Cast<NonBodyParameter>())
                 {
                     // TODO: Make this less hacky when possible!

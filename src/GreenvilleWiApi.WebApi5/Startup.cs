@@ -40,6 +40,7 @@ namespace GreenvilleWiApi.WebApi5
                 c.OperationFilter<GreenvilleApiFilter>();
                 c.OperationFilter<ApplySwaggerOperationFilterAttributes>();
                 c.DocumentFilter<GreenvilleApiFilter>();
+                c.IgnoreObsoleteActions = true;
             });
 
             services.ConfigureSwaggerSchema(c =>
