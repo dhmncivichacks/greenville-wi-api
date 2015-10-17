@@ -18,6 +18,17 @@
     <!--[if lt IE 9]>
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.ie.min.css" />
     <![endif]-->
+    <style>
+        .text-right-md {
+            text-align:right;
+        }
+
+        @@media (max-width: 991px) {
+            .text-right-md {
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -48,6 +59,20 @@
         </div>
 
     </div> <!-- /container -->
+    
+    <hr />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                Hacked together by <a href="mailto:mrosack@sacknet.org">Mike Rosack</a>
+            </div>
+            <div class="col-md-7 text-right-md">
+                A project of the <a href="http://dhmncivichacks.blogspot.com/">NE Wisconsin DHMN Civic Hacking Group</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
