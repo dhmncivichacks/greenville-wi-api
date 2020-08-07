@@ -15,7 +15,7 @@ namespace GreenvilleWiApi.Data.GoogleGeocoding
         /// <summary>
         /// Queries google's geocoding service
         /// </summary>
-        public static async Task<List<GeocodeResult>> Geocode(string address)
+        public static async Task<List<GeocodeResult>> Geocode(string address, string key)
         {
             // https://maps.googleapis.com/maps/api/geocode/json?address=W6683%20Spring%20Green%20Pl%20Greenville,%20WI%2054942
             using (var client = new HttpClient())
@@ -24,7 +24,7 @@ namespace GreenvilleWiApi.Data.GoogleGeocoding
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.GetAsync("maps/api/geocode/json?address=" + address);
+                var response = await client.GetAsync($"maps/api/geocode/json?key={key}&address={address}");
 
                 if (response.IsSuccessStatusCode)
                 {

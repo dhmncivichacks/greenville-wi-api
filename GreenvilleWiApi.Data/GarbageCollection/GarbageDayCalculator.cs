@@ -1,9 +1,9 @@
-﻿using System;
+﻿using GreenvilleWiApi.Data.GoogleGeocoding;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GreenvilleWiApi.Data.GoogleGeocoding;
 
 namespace GreenvilleWiApi.Data.GarbageCollection
 {
@@ -26,17 +26,18 @@ namespace GreenvilleWiApi.Data.GarbageCollection
         /// </summary>
         private static readonly Dictionary<int, List<DateTime>> HOLIDAYS = new Dictionary<int, List<DateTime>>
         {
-            { 2015, new List<DateTime>
+            { 2020, new List<DateTime>
                 {
-                    new DateTime(2015, 1, 1),
-                    new DateTime(2015, 11, 26),
-                    new DateTime(2015, 12, 25)
+                    new DateTime(2020, 1, 1),
+                    new DateTime(2020, 05, 25),
+                    new DateTime(2020, 09, 7),
+                    new DateTime(2020, 11, 26),
+                    new DateTime(2020, 12, 25),
                 }
             },
-            { 2016, new List<DateTime>
+            { 2021, new List<DateTime>
                 {
-                    new DateTime(2015, 1, 1),
-                    new DateTime(2015, 11, 24)
+                    new DateTime(2021, 1, 1),
                 }
             }
         };
@@ -129,7 +130,8 @@ namespace GreenvilleWiApi.Data.GarbageCollection
         {
             date = date.Date;
             var result = new List<GarbageCollectionType>();
-            var holiday = HOLIDAYS[date.Year].SingleOrDefault(x => Math.Abs((date - x).TotalDays) < 3);
+            HOLIDAYS.TryGetValue(date.Year, out var yearHolidays);
+            var holiday = yearHolidays.SingleOrDefault(x => Math.Abs((date - x).TotalDays) < 3);
 
             if (holiday != default(DateTime) && holiday.DayOfWeek <= garbageDay)
                 garbageDay++;

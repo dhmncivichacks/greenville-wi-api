@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using GreenvilleWiApi.Data.GarbageCollection;
 using GreenvilleWiApi.Data.GoogleGeocoding;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Swashbuckle.Swagger;
 using Swashbuckle.Swagger.Annotations;
 
@@ -16,6 +17,13 @@ namespace GreenvilleWiApi.WebApi5.Controllers
     [Route("api/[controller]")]
     public class GarbageCollectionController : Controller
     {
+        private readonly IConfiguration _config;
+
+        public GarbageCollectionController(IConfiguration config)
+        {
+            _config = config;
+        }
+
         /// <summary>
         /// Gets the current time in the Central time zone
         /// </summary>
@@ -38,7 +46,6 @@ namespace GreenvilleWiApi.WebApi5.Controllers
         /// <param name="endDate">The end date of the range to provide collection dates for (if null, defaults to one month in the future)</param>
         /// <returns>A list of collection dates</returns>
         [HttpGet]
-        [SwaggerOperationFilter(typeof(GarbageCollectionOperationFilter))]
         public async Task<IEnumerable<GarbageCollectionEvent>> Get(string addr, DateTime? startDate = null, DateTime? endDate = null)
         {
             if (startDate < this.CentralDateTime || startDate == null)
@@ -48,7 +55,7 @@ namespace GreenvilleWiApi.WebApi5.Controllers
                 endDate = startDate.Value.AddMonths(1);
 
             var address = (
-                from a in await GoogleGeocoder.Geocode(addr)
+                from a in await GoogleGeocoder.Geocode(addr, _config["GoogleApiKey"])
                 from c in a.Components
                 from t in c.Types
                 where t == "postal_code" && c.LongName == "54942"
@@ -61,27 +68,6 @@ namespace GreenvilleWiApi.WebApi5.Controllers
             }
 
             return new List<GarbageCollectionEvent>();
-        }
-
-        /// <summary>
-        /// Operation filter for the garbage collection API
-        /// </summary>
-        public class GarbageCollectionOperationFilter : IOperationFilter
-        {
-            /// <summary>
-            /// Called when generating the operation
-            /// </summary>
-            public void Apply(Operation operation, OperationFilterContext context)
-            {
-                operation.OperationId = "GarbageCollection_Get";
-
-                foreach (var dtParam in operation.Parameters.Where(x => x is NonBodyParameter).Cast<NonBodyParameter>())
-                {
-                    // TODO: Make this less hacky when possible!
-                    if (dtParam.Name == "addr")
-                        dtParam.Required = true;
-                }
-            }
         }
     }
 }
