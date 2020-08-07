@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -32,13 +33,13 @@ namespace GreenvilleWiApi.WebApi
             services.AddMvc()
                 .AddJsonOptions(opts =>
                 {
-                    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
                 });
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "GreenvilleWiApi" });
-                c.DescribeAllEnumsAsStrings();
+                c.DescribeStringEnumsInCamelCase();
                 c.IgnoreObsoleteActions();
             });
             services.AddSwaggerGenNewtonsoftSupport();
